@@ -4,6 +4,8 @@
 #include <stdio.h>    // file IO, perror()
 #include <string.h>   // str(n)cpy()
 #include <stdbool.h>  // Bool type
+#include <getopt.h>
+#include <stdlib.h>
 
 // Function prototypes:
 void print_help();
@@ -13,10 +15,64 @@ void print_env(char* envp[]);
 
 int main(int argc, char* argv[], char* envp[]) {
   // If no arguments are given, print help
-  
+  if(argc == 0)
+    {
+      print_help();
+    }
+ 
   // Set up struct option array long_options[]
+  int c;
+  const int lastline = 1;
+  const int firstline = 0;
+
+  while(1)
+    {
+    static struct option long_options[] =
+      {
+	{"help", no_argument,       0, 'h'},
+	{"file", required_argument, 0, 'f'},
+	{"end",  no_argument,       0, 'e'},
+	{"env",  no_argument,       0, 'v'},
+	{0,0,0,0},
+      };
+    //int option_index  - not required 
+    c = getopt_long(argc, argv, "hevf:",
+		    long_options, NULL);
+    
+    // Scan the different command-line arguments and options
+    if (c == -1)
+      {break;}
+
+    switch(c)
+      {
+      case 'h':
+	puts ("option -h\n");
+	print_help();
+	break;
+
+      case 'f':
+	puts ("option -f\n");
+	read_file(optarg,firstline);
+	break;
+
+      case 'e':
+	puts("option -e\n");
+	read_file(optarg,lastline);
+	break;
+
+      case 'v':
+	puts("option -v\n");
+	print_env(envp);
+	break;
+
+      default:
+	puts("E:No options were detected!");
+	abort ();
+      }
+
+    }
+   
   
-  // Scan the different command-line arguments and options
   return 0;
 }
 
