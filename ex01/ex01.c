@@ -15,11 +15,11 @@ void print_env(char* envp[]);
 
 int main(int argc, char* argv[], char* envp[]) {
   // If no arguments are given, print help
-  if(argc == 0)
-    {
-      print_help();
-    }
- 
+  if(argc == 1)
+  {
+    print_help();
+  }
+  
   // Set up struct option array long_options[]
   int c;
   const int lastline = 1;
@@ -31,12 +31,12 @@ int main(int argc, char* argv[], char* envp[]) {
       {
 	{"help", no_argument,       0, 'h'},
 	{"file", required_argument, 0, 'f'},
-	{"end",  no_argument,       0, 'e'},
+	{"end",  required_argument, 0, 'e'},
 	{"env",  no_argument,       0, 'v'},
-	{0,0,0,0},
+	{0,0,0,0}
       };
     //int option_index  - not required 
-    c = getopt_long(argc, argv, "hevf:",
+    c = getopt_long(argc, argv, "hvf:e:",
 		    long_options, NULL);
     
     // Scan the different command-line arguments and options

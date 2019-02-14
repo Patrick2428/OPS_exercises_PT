@@ -1,0 +1,7 @@
+Hello this is a test for exercise_1: This line will print if -f option is used
+
+
+
+
+
+Hello this is a test for exercise_1: This line will print if the -e option is used
