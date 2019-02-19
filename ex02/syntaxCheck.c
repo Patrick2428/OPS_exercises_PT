@@ -8,23 +8,38 @@
 
 #include <stdlib.h>
 #include "syntaxCheck.h"
+#include <string.h>
+
 
 
 // Test whether an argument is one character long and has the correct value (e,p,w):
 ErrCode TestType(char *printMethod) {
   ErrCode fout = NO_ERR;
-  
-  // Add the missing code
-  
+  if(*printMethod == 'e' || *printMethod == 'p' || *printMethod == 'w')
+    {
+       fout = NO_ERR;
+    }
+  else
+    {
+       fout = ERR_TYPE;
+       
+    }
+   
   return fout;
 }
-
 
 // Test whether an argument contains a non-negative number:
 ErrCode TestNr(char *numberOfTimes) {
   ErrCode fout = NO_ERR;
   
-  // Add the missing code
+  if(*numberOfTimes == '-')
+    {
+      fout = ERR_NR;
+    }
+  else
+    {
+      fout = NO_ERR;
+    }
   
   return fout;
 }
@@ -34,7 +49,14 @@ ErrCode TestNr(char *numberOfTimes) {
 ErrCode TestChar(char *printChar) {
   ErrCode fout = NO_ERR;
   
-  // Add the missing code
-  
+  if(strlen(printChar) >= 2)
+    {
+      fout = ERR_CHAR;
+    }
+
+  else
+    {
+      fout = NO_ERR;
+      }
   return fout;
 }
