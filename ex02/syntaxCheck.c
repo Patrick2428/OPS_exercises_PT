@@ -5,7 +5,6 @@
  * Author:       M. van der Sluys, J.H.L. Onokiewicz, R.B.A. Elsinghorst, J.G. Rouland
  * Description:  OPS exercise 2:  definitions of test functions for display.c
  ******************************************************************************/
-
 #include <stdlib.h>
 #include "syntaxCheck.h"
 #include <string.h>
@@ -31,8 +30,7 @@ ErrCode TestType(char *printMethod) {
 // Test whether an argument contains a non-negative number:
 ErrCode TestNr(char *numberOfTimes) {
   ErrCode fout = NO_ERR;
-  
-  if(*numberOfTimes == '-')
+  if(atoi(numberOfTimes) <= 0)
     {
       fout = ERR_NR;
     }
