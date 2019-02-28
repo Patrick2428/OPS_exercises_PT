@@ -11,9 +11,13 @@
 #include "displayFunctions.h"
 
 int main(int argc, char *argv[]) {
-  unsigned long int numOfTimes;
+  unsigned long int numOfTimes, numofChar, niceIncr;
   char printMethod, printChar;
   ErrCode err;
+
+  numofChar = (argc -4);
+  printf("Num of characters: %ld",numofChar);
+
   
   err = SyntaxCheck(argc, argv);  // Check the command-line parameters
   if(err != NO_ERR) {
@@ -22,6 +26,7 @@ int main(int argc, char *argv[]) {
     printMethod = argv[1][0];
     numOfTimes = strtoul(argv[2], NULL, 10);  // String to unsigned long
     printChar = argv[3][0];
+    niceIncr = strtoul(argv[3], NULL, 10); //String to unsigned long int
     
     PrintCharacters(printMethod, numOfTimes, printChar);  // Print character printChar numOfTimes times using method printMethod
   }
