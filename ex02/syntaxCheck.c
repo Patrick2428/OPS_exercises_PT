@@ -14,14 +14,19 @@
 // Test whether an argument is one character long and has the correct value (e,p,w):
 ErrCode TestType(char *printMethod) {
   ErrCode fout = NO_ERR;
-  if(*printMethod == 'e' || *printMethod == 'p' || *printMethod == 'w')
+  //Test correct length
+  if(strlen(printMethod) >= 2)
+    {
+      fout = ERR_TYPE;
+    }
+  //Test correct value
+  else if(*printMethod == 'e' || *printMethod == 'p' || *printMethod == 'w')
     {
        fout = NO_ERR;
     }
   else
     {
-       fout = ERR_TYPE;
-       
+       fout = ERR_TYPE;      
     }
    
   return fout;
