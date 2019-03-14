@@ -11,13 +11,14 @@
 #include "displayFunctions.h"
 #include "unistd.h"
 #include "sys/wait.h"
+#include <sys/resource.h>
 
 int main(int argc, char *argv[]) {
   unsigned long int numOfTimes, numofChar;
   char printMethod;
   char printChar;
-  int counter, niceIncr;
-  pid_t iChild;
+  int  niceIncr;
+  pid_t Child;
   
   ErrCode err;
   
@@ -32,32 +33,44 @@ int main(int argc, char *argv[]) {
   numofChar = (argc -4);
   printf("Num of characters: %ld\n",numofChar);
 
-  for(counter = 0; counter < numofChar; counter++)
+  for(int iChild = 0; iChild < numofChar; iChild++)
     {
-      iChild  = fork();
+      Child  = fork();
 
-      switch(iChild){
+      switch(Child){
 
       case -1:
 	  perror("forking has failed,no child process created");
 	  exit(1);
-
+	  break;
+	  
       case 0:
 	  //Child process
-	printChar = argv[counter + 4][0];
-	printf("The pid of child%d is: %d\nThe character: %c\nThe nice increment: %d\n",counter+1,getpid(), printChar, iChild*niceIncr);
-	//execl("./display", printChar, (char*) NULL);
-
-      default:
-	  //Mother process
-	  wait(NULL);
-	
-      }
-      
-    }
+	printChar = argv[iChild + 4][0];
+	/*printf("The pid of child%d is: %d\nThe character: %c\nThe nice increment: %d\n",iChild+1,getpid(), printChar, iChild*niceIncr);*/
     
+	if(nice(iChild * niceIncr) == -1)
+	  {
+	    perror("The nice() failed\n");
+	  }
+	   
+	   PrintCharacters(printMethod, numOfTimes, printChar);  // Print character printChar numOfTimes times using method printMethod*/
+
+  printf("\nThe priority of childID %d is: %d\n",getpid(), getpriority(PRIO_PROCESS, getpid()));  	
+	break;
+	
+      default:
+	  //parent process
+	  wait(NULL);
+	  
+      }
+      if(Child == 0)
+	{
+	  break;
+	}
+    }
   
-  /* PrintCharacters(printMethod, numOfTimes, printChar);  // Print character printChar numOfTimes times using method printMethod*/
+
   }
   
   printf("\n");  // Newline at end
