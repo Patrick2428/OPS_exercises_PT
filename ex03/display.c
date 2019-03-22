@@ -14,15 +14,17 @@
 #include <sys/resource.h>
 
 int main(int argc, char *argv[]) {
-  unsigned long int numOfTimes, numofChar;
+  unsigned long int numOfTimes;
   char printMethod;
   char printChar;
-  int  niceIncr;
+  int  niceIncr,numofChar;
   pid_t Child;
   
   ErrCode err;
+
+  numofChar = (argc -4);
   
-  err = SyntaxCheck(argc, argv);  // Check the command-line parameters
+  err = SyntaxCheck(argc, argv, numofChar);  // Check the command-line parameters
   if(err != NO_ERR) {
     DisplayError(err);        // Print an error message
   } else {
@@ -30,8 +32,8 @@ int main(int argc, char *argv[]) {
     numOfTimes = strtoul(argv[2], NULL, 10);  // String to unsigned long
     niceIncr = strtoul(argv[3], NULL, 10); //String to unsigned long int
 
-  numofChar = (argc -4);
-  printf("Num of characters: %ld\n",numofChar);
+  
+  printf("Num of characters: %d\n",numofChar);
 
   for(int iChild = 0; iChild < numofChar; iChild++)
     {
@@ -56,18 +58,22 @@ int main(int argc, char *argv[]) {
 	   
 	   PrintCharacters(printMethod, numOfTimes, printChar);  // Print character printChar numOfTimes times using method printMethod*/
 
-  printf("\nThe priority of childID %d is: %d\n",getpid(), getpriority(PRIO_PROCESS, getpid()));  	
+  printf("\nThe priority of child %d is: %d\n",iChild, getpriority(PRIO_PROCESS, getpid()));  	
 	break;
 	
       default:
 	  //parent process
-	  wait(NULL);
-	  
+	break;
       }
       if(Child == 0)
 	{
 	  break;
 	}
+    }
+
+  for(int x = 0; x < numofChar; x ++)
+    {
+      wait(NULL);
     }
   
 

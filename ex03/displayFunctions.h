@@ -11,7 +11,7 @@
 
 #include "errorCodes.h"
 
-ErrCode SyntaxCheck(int argc, char **argv);
+ErrCode SyntaxCheck(int argc, char **argv, int characters);
 /*
   Input:    argc = number of command-line parameters to test
             argv = begin adress of array of pointers

@@ -13,14 +13,19 @@
 #include "syntaxCheck.h"
 
 // Check the command-line parameters:
-ErrCode SyntaxCheck(int argc, char **argv) {
+ErrCode SyntaxCheck(int argc, char **argv, int characters) {
   ErrCode errCode = NO_ERR;
-  if(argc != NUM_OF_PARS) {
-    errCode = NO_ERR;
+  if(argc != (characters + 4)) {
+    errCode = ERR_PARS;
   } else {
     errCode = TestType(argv[1]);                        // Test whether argument 1 has the correct value (print type)
     if(errCode == NO_ERR) errCode = TestNr(argv[2]);    // Test whether argument 2 contains a positive integer (number of times)
-    if(errCode == NO_ERR) errCode = TestChar(argv[3]);  // Test whether argument 3 contains only one character (print character)
+     if(errCode == NO_ERR) errCode = TestNr(argv[3]);  // Test whether argument 3 (NiceValue) is a positive value
+     for(int x = 4; x < argc; x++)
+       {
+	 if(errCode == NO_ERR) errCode = TestChar(argv[x]);
+       }
+    
   }
   return errCode;
 }
@@ -29,13 +34,13 @@ ErrCode SyntaxCheck(int argc, char **argv) {
 void DisplayError(ErrCode errCode) {
   switch(errCode) {
   case ERR_PARS:
-    printf("\nNumber of command-line parameters is less than four.\n");
+    printf("\nNumber of command-line parameters is incorrect.\n");
     break;
   case ERR_TYPE:
     printf("\nUnknown print type.\n");
     break;
   case ERR_NR:
-    printf("\nNumber of times is not a positive integer.\n");
+    printf("\nNumber of times or the nice value is not a positive integer.\n");
     break;
   case ERR_CHAR:
     printf("\nPrint character contains more than one character.\n");
