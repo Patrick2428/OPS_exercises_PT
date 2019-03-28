@@ -9,6 +9,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "displayFunctions.h"
+#include "unistd.h"
+#include "sys/wait.h"
+#include <sys/resource.h>
+#include <sys/time.h>
 
 int main(int argc, char *argv[]) {
   unsigned long int numOfTimes;
@@ -22,7 +26,9 @@ int main(int argc, char *argv[]) {
     printMethod = argv[1][0];
     numOfTimes = strtoul(argv[2], NULL, 10);  // String to unsigned long
     printChar = argv[3][0];
-    
+
+
+    /*printf("\nThe priority of child: %d is %d\n", getpid(), getpriority(PRIO_PROCESS,getpid()));*/
     PrintCharacters(printMethod, numOfTimes, printChar);  // Print character printChar numOfTimes times using method printMethod
   }
   

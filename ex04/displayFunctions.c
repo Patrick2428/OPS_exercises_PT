@@ -18,13 +18,7 @@ ErrCode SyntaxCheck(int argc, char **argv, int characters) {
   if(argc != (characters + 4)) {
     errCode = ERR_PARS;
   } else {
-    errCode = TestType(argv[1]);                        // Test whether argument 1 has the correct value (print type)
-    if(errCode == NO_ERR) errCode = TestNr(argv[2]);    // Test whether argument 2 contains a positive integer (number of times)
      if(errCode == NO_ERR) errCode = TestNr(argv[3]);  // Test whether argument 3 (NiceValue) is a positive value
-     for(int x = 4; x < argc; x++)
-       {
-	 if(errCode == NO_ERR) errCode = TestChar(argv[x]);
-       }
     
   }
   return errCode;
@@ -36,14 +30,8 @@ void DisplayError(ErrCode errCode) {
   case ERR_PARS:
     printf("\nNumber of command-line parameters is incorrect.\n");
     break;
-  case ERR_TYPE:
-    printf("\nUnknown print type.\n");
-    break;
   case ERR_NR:
-    printf("\nNumber of times or the nice value is not a positive integer.\n");
-    break;
-  case ERR_CHAR:
-    printf("\nPrint character contains more than one character.\n");
+    printf("\nThe nice value is not a positive integer.\n");
     break;
   default:
     printf("\nUnknown error code!\n");
@@ -57,30 +45,3 @@ void DisplayError(ErrCode errCode) {
   printf("\n");  // Newline at end
 }
 
-
-// Print chacacter printChar numberOfTimes times using method printMethod:
-void PrintCharacters(char printMethod, unsigned long numberOfTimes, char printChar) {
-  unsigned long index = 0;
-  char echoCommand[] = "/bin/echo -n  ";
-  
-  switch(printMethod) {
-  case 'e':
-    echoCommand[13] = printChar;  // Put character to be printed in string
-    for(index = 0; index < numberOfTimes; index++) {
-      system(echoCommand);
-    }
-    break;
-  case 'p':
-    for(index = 0; index < numberOfTimes; index++) {
-      printf("%c", printChar);
-    }
-    break;
-  case 'w':
-    for(index = 0; index < numberOfTimes; index++) {
-      write(1, &printChar, 1);
-    }
-    break;
-  default:
-    printf("INTERNAL ERROR: Unknown print type:  %s.  This should not happen!\n", &printMethod);
-  }
-}
