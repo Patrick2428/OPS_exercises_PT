@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
         setpriority(PRIO_PROCESS,getpid(),(niceIncr*iChild));
 	printf("The priority of Child%d: %d\n",iChild, getpriority(PRIO_PROCESS,getpid()));
 
-	execl("../ex02/./display","display",argv[1],argv[2],argv[4+iChild],(char*)NULL );
+	execl("../ex02/display","display",argv[1],argv[2],argv[4+iChild],(char*)NULL );
 	
 	perror("Starting child failed\n");	
 	break;
