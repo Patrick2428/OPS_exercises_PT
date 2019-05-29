@@ -57,6 +57,6 @@ int main() {
   createQueue(&queue, data);
   showQueue(&queue);
   data.intVal++;
-  
+  // deleteQueue(&queue);	    
   return 0;
 }
